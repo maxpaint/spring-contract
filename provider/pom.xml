@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.pub</groupId>
-    <artifactId>provider</artifactId>
+    <artifactId>producer</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>contract</name>
     <description>Demo project for Spring Boot</description>
@@ -62,7 +62,7 @@
                 <configuration>
                     <testFramework>JUNIT5</testFramework>
                     <!--<packageWithBaseClasses>com.pub</packageWithBaseClasses>-->
-                    <baseClassForTests>com.pub.provider.contractTest.BaseTestClass</baseClassForTests>
+                    <baseClassForTests>com.pub.producer.contractTest.BaseTestClass</baseClassForTests>
                 </configuration>
             </plugin>
             <plugin>

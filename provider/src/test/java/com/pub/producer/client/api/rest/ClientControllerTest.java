@@ -1,4 +1,4 @@
-package com.pub.provider.client.api.rest;
+package com.pub.producer.client.api.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;

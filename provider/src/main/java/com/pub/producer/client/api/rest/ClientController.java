@@ -1,7 +1,5 @@
-package com.pub.provider.client.api.rest;
+package com.pub.producer.client.api.rest;
 
-import com.pub.provider.client.service.CheckInformation;
-import com.pub.provider.client.service.ClientService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;

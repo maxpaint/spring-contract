@@ -1,6 +1,5 @@
-package com.pub.provider.client.service;
+package com.pub.producer.client.service;
 
-import com.pub.provider.client.api.rest.CheckDto;
 import org.springframework.stereotype.Service;
 
 @Service
