@@ -1,15 +1,14 @@
 package com.pub.consumer.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pub.consumer.ClientDto;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.contract.stubrunner.spring.AutoConfigureStubRunner;
 import org.springframework.cloud.contract.stubrunner.spring.StubRunnerPort;
 import org.springframework.cloud.contract.stubrunner.spring.StubRunnerProperties;
-import org.springframework.http.MediaType;
-import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
@@ -25,40 +24,34 @@ class PubClientTest {
     @Autowired
     private ObjectMapper mapper;
 
+    private RestTemplate restTemplate = new RestTemplate();
+
+    private static PubClient pubClient;
+
+    @BeforeEach
+    public void init() {
+        pubClient = new PubClient(restTemplate, mapper, "http://localhost:" + this.producerPort);
+    }
+
+
     @Test
     public void should_give_me_a_beer_when_im_old_enough() {
         var adult = new ClientDto().setAge(21);
-        CheckDto response = new RestTemplateBuilder()
-                .defaultHeader("contentType", MediaType.APPLICATION_JSON.toString())
-                .build()
-                .postForObject("http://localhost:" + this.producerPort + "/clients/1/check",
-                        adult, CheckDto.class);
-
-        assertThat(response.isAdult()).isEqualTo(true);
+        boolean actualResult = pubClient.canClientOrderBear(adult);
+        assertThat(actualResult).isEqualTo(true);
     }
 
     @Test
     public void should_reject_a_beer_when_im_too_young() {
         var teenager = new ClientDto().setAge(15);
-        CheckDto actualResult = null;
-        try {
-            new RestTemplate()
-                    .postForObject("http://localhost:" + this.producerPort + "/clients/1/check",
-                            teenager, CheckDto.class);
-        } catch (HttpClientErrorException clientErrorException) {
-            actualResult = jsonToClass(clientErrorException.getResponseBodyAsString(), CheckDto.class);
-        }
-
-        assertThat(actualResult.isAdult()).isEqualTo(false);
+        boolean actualResult = pubClient.canClientOrderBear(teenager);
+        assertThat(actualResult).isEqualTo(false);
     }
 
-    <T> T jsonToClass(final String json, Class<T> clazz) {
-        try {
-            return mapper.readValue(json, clazz);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-
+    /*@Test
+    public void should_reject_a_beer_when_im_too_old() {
+        var teenager = new ClientDto().setAge(80);
+        boolean actualResult = pubClient.canClientOrderBear(teenager);
+        assertThat(actualResult).isEqualTo(false);
+    }*/
 }

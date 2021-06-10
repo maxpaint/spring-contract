@@ -1,4 +1,4 @@
-package com.pub.consumer.client;
+package com.pub.consumer;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

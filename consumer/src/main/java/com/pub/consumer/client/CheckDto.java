@@ -9,7 +9,7 @@ import lombok.experimental.Accessors;
 @Setter
 @Accessors(chain = true)
 @RequiredArgsConstructor
-public class CheckDto {
+class CheckDto {
 
     public boolean adult;
     public boolean blocked;
