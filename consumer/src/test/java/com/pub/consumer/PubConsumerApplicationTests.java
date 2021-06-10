@@ -1,11 +1,13 @@
-package com.pub.provider;
+package com.pub.consumer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class ContractApplicationTests {
+class PubConsumerApplicationTests {
 
+	@Test
 	void contextLoads() {
 	}
+
 }
